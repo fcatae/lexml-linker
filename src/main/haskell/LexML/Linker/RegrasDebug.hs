@@ -34,27 +34,25 @@ import qualified LexML.URN.Atalhos as U
 import qualified LexML.Linker.Regras2 as R2
 
 parseCases :: [ParseCase2]
-parseCases = (check2 >> get2) : R2.parseCases
+parseCases = (checkDebug >> runDebugParser) : R2.parseCases
 
-check2 :: LinkerParserMonad ()
-check2 = do
+checkDebug :: LinkerParserMonad ()
+checkDebug = do
    a <- constanteI "debug"
    return ()
 
-get2 :: ParseCase2
-get2 = do
+runDebugParser :: ParseCase2
+runDebugParser = do
    i <- constanteI "parseMes"
-   pm <- R2.parseMes
-   return [(i, i, lei)]
-   where
-     lei = \_ -> createLink
+   (p, mes) <- R2.parseMes
+   return [(p, p, createLink "parseMes" $ show mes)]
 
-createLink :: URNLexML    
-createLink =  URNLexML (Local Brasil Nothing) 
+createLink :: String -> String -> URNLexML -> URNLexML
+createLink categoria nome ctx = URNLexML (Local Brasil Nothing) 
                 (Documento (A_Normal [
                             SJ_Cargo (Cargo $ Nome ["test"])]) 
-                            (TipoDocumento1 (STD1_Norma (TipoNorma $ Nome ["abcd","12131"])) Nothing) 
-                            (Descritor (TD_Apelido Nothing (ApelidoDocumento $ Nome ["def"])) [] Nothing) )
+                            (TipoDocumento1 (STD1_Norma (TipoNorma $ Nome [categoria])) Nothing) 
+                            (Descritor (TD_Apelido Nothing (ApelidoDocumento $ Nome [nome])) [] Nothing) )
                 Nothing
                 (Just $ Forma (TipoForma $ Nome ["debug"]) [])
                 Nothing
