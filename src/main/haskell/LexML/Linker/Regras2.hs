@@ -1005,23 +1005,10 @@ parseMes = casosSimples
 
 parseCases ::  [ParseCase2]
 parseCases = [
-      check2 >> get2,
       --failIfEmpty "ops2" $ parseComponente compArtigo,
       checkInitialToken >> (failIfEmpty "ops2" $ norma),
       fail "ops"
   ]   
-
-check2 :: LinkerParserMonad ()
-check2 = do
-   a <- constanteI "debug"
-   return ()
-
-get2 :: ParseCase2
-get2 = do
-   i <- constanteI "debug"
-   return [(i, i, lei)]
-   where
-     lei = \_ -> U.leiFederal [123] 1 4 2018
 
 checkInitialToken :: LinkerParserMonad ()
 checkInitialToken = do
