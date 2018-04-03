@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 
-module LexML.Linker.Regras2 (parseCases) where
+module LexML.Linker.Regras2 where
+--  module LexML.Linker.Regras2 (parseCases) where
 
 import Data.Char
 import Data.Maybe
