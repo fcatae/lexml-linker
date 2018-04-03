@@ -43,7 +43,18 @@ check2 = do
 
 get2 :: ParseCase2
 get2 = do
-   i <- constanteI "debug"
+   i <- constanteI "parseMes"
+   pm <- R2.parseMes
    return [(i, i, lei)]
    where
-     lei = \_ -> U.leiFederal [123] 1 4 2018
+     lei = \_ -> createLink
+
+createLink :: URNLexML    
+createLink =  URNLexML (Local Brasil Nothing) 
+                (Documento (A_Normal [
+                            SJ_Cargo (Cargo $ Nome ["test"])]) 
+                            (TipoDocumento1 (STD1_Norma (TipoNorma $ Nome ["abcd","12131"])) Nothing) 
+                            (Descritor (TD_Apelido Nothing (ApelidoDocumento $ Nome ["def"])) [] Nothing) )
+                Nothing
+                (Just $ Forma (TipoForma $ Nome ["debug"]) [])
+                Nothing
