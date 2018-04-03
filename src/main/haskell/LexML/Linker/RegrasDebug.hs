@@ -14,7 +14,7 @@ module LexML.Linker.RegrasDebug (parseCases) where
 -- import Control.Monad.Writer
 
 -- import qualified Data.Map as M
--- import Text.Parsec
+import Text.Parsec
 -- import Text.Parsec.Prim
 -- import Text.Parsec.Pos (newPos)
 
@@ -42,10 +42,18 @@ checkDebug = do
    return ()
 
 runDebugParser :: ParseCase2
-runDebugParser = do
-   i <- constanteI "parseMes"
-   (p, mes) <- R2.parseMes
-   return [(p, p, createLink "parseMes" $ show mes)]
+runDebugParser = choice [ dbgParseMes , dbgParseDataAbrev ]
+  where
+  dbgParseMes = do
+    i <- constanteI "parseMes"
+    (p, mes) <- R2.parseMes
+    return [(p, p, createLink "parseMes" $ show mes)]
+
+  dbgParseDataAbrev = do
+    i <- constanteI "parseDataAbrev"
+    (p, f, dt) <- R2.parseDataAbrev
+    return [(p, f, createLink "parseDataAbrev" $ show dt)]
+
 
 createLink :: String -> String -> URNLexML -> URNLexML
 createLink categoria nome ctx = URNLexML (Local Brasil Nothing) 
