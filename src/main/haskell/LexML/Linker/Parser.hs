@@ -23,7 +23,9 @@ import LexML.URN.Show
 import qualified LexML.URN.Atalhos as U
 import LexML.Linker.ParserBase
 -- import LexML.Linker.Regras
-import qualified LexML.Linker.Regras2 as R2
+import qualified LexML.Linker.RegrasDebug as R2
+--import qualified LexML.Linker.Regras2 as R2
+
 import LexML.Linker.RegrasSTF
 
 
